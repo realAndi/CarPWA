@@ -1,0 +1,20 @@
+#!/bin/sh
+# Runs as root after install and upgrade.
+DATA=/var/jb/var/mobile/Library/CarPWA
+PLIST=/var/jb/Library/LaunchDaemons/com.andi.carpwa.daemon.plist
+
+mkdir -p "$DATA/Apps" "$DATA/Data" "$DATA/run"
+chown 501:501 "$DATA" "$DATA/Apps" "$DATA/Data" "$DATA/run"
+chmod 0755 "$DATA" "$DATA/Apps" "$DATA/run"
+chmod 0700 "$DATA/Data"
+# Files the daemon wrote while running as root by mistake would lock it out.
+chown -R 501:501 "$DATA" 2>/dev/null
+
+chown root:wheel "$PLIST"
+chmod 0644 "$PLIST"
+launchctl unload "$PLIST" >/dev/null 2>&1
+launchctl load -w "$PLIST" || launchctl bootstrap system "$PLIST" || true
+
+# The launcher app the pages run in: CarPlay finds it through LaunchServices.
+uicache -p /var/jb/Applications/CarPWA.app || true
+exit 0

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{NAME}}</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <img class="hero-icon" src="icon.png" alt="">
+      <div>
+        <h1 class="cp-title">{{NAME}}</h1>
+        <p class="cp-subtitle" id="car">Looking for a car…</p>
+      </div>
+      <span class="mode" id="mode">…</span>
+    </header>
+
+    <section class="tiles">
+      <article class="cp-card tile">
+        <span class="tile-icon" id="night-icon" aria-hidden="true">☀︎</span>
+        <h2 class="tile-label">Night mode</h2>
+        <p class="tile-value" id="night">–</p>
+        <p class="tile-note" id="appearance">appearance –</p>
+      </article>
+      <article class="cp-card tile">
+        <span class="tile-icon" aria-hidden="true">▭</span>
+        <h2 class="tile-label">Screen</h2>
+        <p class="tile-value cp-mono" id="size">–</p>
+        <p class="tile-note" id="input">input –</p>
+      </article>
+      <article class="cp-card tile cp-hide-when-limited">
+        <span class="tile-icon" aria-hidden="true">✦</span>
+        <h2 class="tile-label">Next step</h2>
+        <p class="tile-note">Edit <code>app.js</code>; the simulator reloads on save.</p>
+      </article>
+    </section>
+
+    <p class="browser-hint" id="hint" hidden>
+      Running in a plain browser. Start <code>carpwa sim</code> to get a mock car, or push to your phone.
+    </p>
+  </main>
+</body>
+</html>

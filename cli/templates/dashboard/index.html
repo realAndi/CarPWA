@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{NAME}}</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="dash">
+    <section class="cp-card clock-card">
+      <p class="greeting" id="greeting">Hello</p>
+      <p class="clock cp-mono" id="clock">--:--</p>
+      <p class="date" id="date"></p>
+      <button class="cp-button toggle" id="format" role="switch" aria-checked="false">
+        <span class="switch" aria-hidden="true"></span>
+        <span>24-hour clock</span>
+      </button>
+    </section>
+
+    <section class="cp-card now-card" id="now" data-state="empty">
+      <h2 class="card-label">Now playing</h2>
+      <div class="now">
+        <div class="thumb" id="thumb" aria-hidden="true">♪</div>
+        <div class="now-text">
+          <p class="now-title" id="now-title">Nothing playing</p>
+          <p class="now-artist" id="now-artist">Music from your phone shows up here.</p>
+        </div>
+      </div>
+      <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+    </section>
+  </main>
+</body>
+</html>

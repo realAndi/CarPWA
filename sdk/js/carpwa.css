@@ -1,0 +1,150 @@
+/*
+ * carpwa.css — optional base styles for CarPWA apps.
+ * <link rel="stylesheet" href="/_carpwa/carpwa.css">
+ *
+ * Follows the CarPlay appearance the SDK writes to <html data-carpwa-appearance>,
+ * falls back to prefers-color-scheme, and draws a focus ring for knob input.
+ */
+
+:root {
+  --cp-bg: #000;
+  --cp-surface: #1c1c1e;
+  --cp-surface-2: #2c2c2e;
+  --cp-separator: rgba(255, 255, 255, 0.12);
+  --cp-text: #fff;
+  --cp-text-2: rgba(235, 235, 245, 0.6);
+  --cp-accent: #0a84ff;
+  --cp-danger: #ff453a;
+  --cp-success: #30d158;
+  --cp-focus: #fff;
+  --cp-radius: 14px;
+  --cp-tap: 52px;
+  --carpwa-safe-top: 0px;
+  --carpwa-safe-left: 0px;
+  --carpwa-safe-bottom: 0px;
+  --carpwa-safe-right: 0px;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-carpwa-appearance]) {
+    --cp-bg: #f2f2f7;
+    --cp-surface: #fff;
+    --cp-surface-2: #e5e5ea;
+    --cp-separator: rgba(60, 60, 67, 0.18);
+    --cp-text: #000;
+    --cp-text-2: rgba(60, 60, 67, 0.6);
+    --cp-accent: #007aff;
+    --cp-danger: #ff3b30;
+    --cp-success: #34c759;
+    --cp-focus: #000;
+    color-scheme: light;
+  }
+}
+
+:root[data-carpwa-appearance="light"] {
+  --cp-bg: #f2f2f7;
+  --cp-surface: #fff;
+  --cp-surface-2: #e5e5ea;
+  --cp-separator: rgba(60, 60, 67, 0.18);
+  --cp-text: #000;
+  --cp-text-2: rgba(60, 60, 67, 0.6);
+  --cp-accent: #007aff;
+  --cp-danger: #ff3b30;
+  --cp-success: #34c759;
+  --cp-focus: #000;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--cp-bg);
+  color: var(--cp-text);
+  font: 17px/1.3 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+}
+
+body {
+  padding: var(--carpwa-safe-top) var(--carpwa-safe-right) var(--carpwa-safe-bottom) var(--carpwa-safe-left);
+}
+
+/* ------------------------------------------------------------- controls */
+
+.cp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--cp-tap);
+  min-width: var(--cp-tap);
+  padding: 0 20px;
+  border: 0;
+  border-radius: var(--cp-radius);
+  background: var(--cp-surface-2);
+  color: var(--cp-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.12s ease;
+}
+.cp-button:active { transform: scale(0.96); }
+.cp-button.cp-primary { background: var(--cp-accent); color: #fff; }
+.cp-button.cp-danger { background: var(--cp-danger); color: #fff; }
+.cp-button.cp-round { border-radius: 999px; padding: 0; }
+
+.cp-card {
+  background: var(--cp-surface);
+  border-radius: calc(var(--cp-radius) + 4px);
+  padding: 16px;
+}
+
+.cp-list { list-style: none; margin: 0; padding: 0; }
+.cp-list > li,
+.cp-list > a,
+.cp-list > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: var(--cp-tap);
+  padding: 8px 16px;
+  border: 0;
+  border-bottom: 1px solid var(--cp-separator);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+}
+
+.cp-title { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+.cp-subtitle { color: var(--cp-text-2); font-size: 15px; margin: 0; }
+.cp-mono { font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------- knob focus */
+
+.carpwa-focused {
+  outline: 3px solid var(--cp-focus) !important;
+  outline-offset: 3px;
+  border-radius: var(--cp-radius);
+}
+:root:not([data-carpwa-input="knob"]):not([data-carpwa-input="touchpad"]) .carpwa-focused:not(:focus-visible) {
+  outline-color: transparent !important;
+}
+
+/* ------------------------------------------- limited UI while driving */
+
+:root[data-carpwa-limited] .cp-hide-when-limited { display: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}

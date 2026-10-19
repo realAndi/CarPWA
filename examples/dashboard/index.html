@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <path id="p-cloud" d="M7 19h10.5a4.5 4.5 0 0 0 .4-8.98A6 6 0 0 0 6.3 11.1 4 4 0 0 0 7 19z"/>
+      <path id="p-cloud-small" d="M7.5 15.5h9.5a3.8 3.8 0 0 0 .3-7.6A5.2 5.2 0 0 0 7.1 8.9a3.3 3.3 0 0 0 .4 6.6z"/>
+    </defs>
+    <symbol id="i-sliders" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h9.5M18.5 7H20M4 17h1.5M10.5 17H20"/>
+        <circle cx="16" cy="7" r="2.5"/><circle cx="8" cy="17" r="2.5"/>
+      </g>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.8v14.4a1 1 0 0 0 1.5.86l12-7.2a1 1 0 0 0 0-1.72l-12-7.2A1 1 0 0 0 7 4.8z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><rect x="5.5" y="4.5" width="4.6" height="15" rx="1.3"/><rect x="13.9" y="4.5" width="4.6" height="15" rx="1.3"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24">
+      <path d="M8.6 6.2 20.4 3.6v3.2L8.6 9.4z"/>
+      <rect x="8.6" y="6.4" width="1.7" height="11.4" rx=".6"/>
+      <rect x="18.7" y="3.8" width="1.7" height="11.4" rx=".6"/>
+      <ellipse cx="6.9" cy="17.7" rx="3.2" ry="2.5" transform="rotate(-20 6.9 17.7)"/>
+      <ellipse cx="17" cy="15.1" rx="3.2" ry="2.5" transform="rotate(-20 17 15.1)"/>
+    </symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 3 19.5 20.5 12 16.6 4.5 20.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+    <symbol id="i-gauge" viewBox="0 0 24 24">
+      <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        <path d="M4.5 17a8.5 8.5 0 1 1 15 0"/><path d="M12 13 15.6 8.6"/>
+      </g>
+      <circle cx="12" cy="13" r="2"/>
+    </symbol>
+    <symbol id="i-car" viewBox="0 0 24 24">
+      <path d="M5.6 11.5 7.1 7.3a2 2 0 0 1 1.9-1.3h6a2 2 0 0 1 1.9 1.3l1.5 4.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      <rect x="3.5" y="10.5" width="17" height="7" rx="2.2"/>
+      <rect x="5" y="16" width="3.6" height="4" rx="1.2"/><rect x="15.4" y="16" width="3.6" height="4" rx="1.2"/>
+    </symbol>
+    <symbol id="i-broadcast" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="2.2"/>
+      <path d="M8.2 8.2a5.4 5.4 0 0 0 0 7.6M15.8 8.2a5.4 5.4 0 0 1 0 7.6M5.3 5.3a9.5 9.5 0 0 0 0 13.4M18.7 5.3a9.5 9.5 0 0 1 0 13.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4.6"/>
+      <path d="M12 2v2.4M12 19.6V22M2 12h2.4M19.6 12H22M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><use href="#p-cloud"/></symbol>
+    <symbol id="i-partly" viewBox="0 0 24 24">
+      <g opacity=".6"><circle cx="8" cy="8" r="3.4"/><path d="M8 1.8v1.3M1.8 8h1.3M3.6 3.6l.9.9M12.4 3.6l-.9.9M3.6 12.4l.9-.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></g>
+      <use href="#p-cloud" transform="translate(1.5 1.5) scale(.92)"/>
+    </symbol>
+    <symbol id="i-partly-night" viewBox="0 0 24 24">
+      <path opacity=".6" d="M11.5 8.6A4.6 4.6 0 1 1 6 3.1a3.8 3.8 0 0 0 5.5 5.5z"/>
+      <use href="#p-cloud" transform="translate(1.5 1.5) scale(.92)"/>
+    </symbol>
+    <symbol id="i-fog" viewBox="0 0 24 24">
+      <path d="M4 8h16M6 12h12M4 16h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-rain" viewBox="0 0 24 24">
+      <use href="#p-cloud-small"/>
+      <path d="M8.5 18.5 7.5 21M12.5 18.5l-1 2.5M16.5 18.5l-1 2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="i-snow" viewBox="0 0 24 24">
+      <use href="#p-cloud-small"/>
+      <circle cx="8" cy="19.5" r="1.3"/><circle cx="12" cy="21" r="1.3"/><circle cx="16" cy="19.5" r="1.3"/>
+    </symbol>
+    <symbol id="i-storm" viewBox="0 0 24 24">
+      <use href="#p-cloud-small"/>
+      <path d="M12.8 15.5 10 19.6h2.6l-1.3 3.4 3.9-5h-2.7l1.4-2.5z"/>
+    </symbol>
+  </svg>
+
+  <main class="board" id="board">
+    <!-- Clock -->
+    <section class="widget clock" aria-label="Clock">
+      <div class="clock-time"><span id="clock-time">--:--</span><span class="clock-period" id="clock-period"></span></div>
+      <p class="clock-date" id="clock-date"></p>
+      <button class="icon-button settings-button" id="open-settings" aria-label="Settings">
+        <svg><use href="#i-sliders"/></svg>
+      </button>
+    </section>
+
+    <!-- Weather (hidden while the car limits the UI) -->
+    <section class="widget weather cp-hide-when-limited" aria-label="Weather">
+      <header class="w-head"><span class="chip c-orange"><svg><use href="#i-sun"/></svg></span>Weather</header>
+      <div class="weather-body">
+        <svg class="weather-icon" aria-hidden="true"><use id="weather-icon" href="#i-cloud"/></svg>
+        <span class="big" id="weather-temp">--°</span>
+        <div class="weather-text">
+          <p class="w-title" id="weather-desc">Checking…</p>
+          <p class="w-line" id="weather-place"></p>
+        </div>
+      </div>
+      <p class="w-note" id="weather-note" role="status"></p>
+    </section>
+
+    <!-- Now playing -->
+    <section class="widget media" id="media" data-state="empty" aria-label="Now playing">
+      <div class="media-art">
+        <svg aria-hidden="true"><use href="#i-note"/></svg>
+        <img id="media-art" alt="">
+      </div>
+      <div class="media-text">
+        <p class="w-title" id="media-title">Nothing playing</p>
+        <p class="w-line" id="media-artist"></p>
+        <p class="w-note" id="media-note" role="status"></p>
+      </div>
+      <button class="round-button" id="media-toggle" aria-label="Play">
+        <svg class="when-paused"><use href="#i-play"/></svg>
+        <svg class="when-playing"><use href="#i-pause"/></svg>
+      </button>
+    </section>
+
+    <!-- Navigation -->
+    <section class="widget nav" id="nav" data-state="idle" aria-label="Navigation">
+      <header class="w-head"><span class="chip c-blue"><svg><use href="#i-arrow"/></svg></span>Navigation</header>
+      <p class="w-title" id="nav-title">Not navigating</p>
+      <p class="w-line" id="nav-line"></p>
+    </section>
+
+    <!-- Speed -->
+    <section class="widget speed" aria-label="Speed">
+      <header class="w-head"><span class="chip c-green"><svg><use href="#i-gauge"/></svg></span>Speed</header>
+      <div class="speed-row">
+        <span class="big" id="speed-value">–</span>
+        <button class="pill-button" id="speed-unit" aria-label="Change speed unit">km/h</button>
+      </div>
+      <p class="w-note" id="speed-note" role="status"></p>
+    </section>
+
+    <!-- Car (hidden while the car limits the UI) -->
+    <section class="widget car cp-hide-when-limited" aria-label="Car">
+      <header class="w-head"><span class="chip c-indigo"><svg><use href="#i-car"/></svg></span>Car</header>
+      <p class="w-title" id="car-name">–</p>
+      <p class="w-line" id="car-mode"></p>
+    </section>
+
+    <!-- Messages between CarPWA apps (hidden while the car limits the UI) -->
+    <section class="widget channel cp-hide-when-limited" aria-label="Messages from other apps">
+      <header class="w-head">
+        <span class="chip c-teal"><svg><use href="#i-broadcast"/></svg></span>Messages
+        <button class="pill-button" id="wave">Wave</button>
+      </header>
+      <p class="w-title" id="channel-text">No messages yet</p>
+      <p class="w-line" id="channel-line"></p>
+      <p class="w-note" id="channel-note" role="status"></p>
+    </section>
+  </main>
+
+  <!-- Settings sheet -->
+  <div class="sheet" id="settings" hidden>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <header class="sheet-head">
+        <h2 id="settings-title">Settings</h2>
+        <button class="cp-button cp-primary" id="close-settings">Done</button>
+      </header>
+
+      <p class="sheet-label">Units</p>
+      <div class="segmented" id="units">
+        <button data-units="metric">Metric · km/h, °C</button>
+        <button data-units="imperial">Imperial · mph, °F</button>
+      </div>
+
+      <p class="sheet-label">Weather location when GPS is unavailable</p>
+      <div class="cities" id="cities"></div>
+
+      <p class="w-note" id="settings-note" role="status"></p>
+    </div>
+  </div>
+</body>
+</html>

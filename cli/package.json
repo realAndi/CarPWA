@@ -1,0 +1,33 @@
+{
+  "name": "carpwa-cli",
+  "version": "1.0.0",
+  "description": "Developer CLI for CarPWA: scaffold, validate, simulate and push web apps that run on the CarPlay screen",
+  "type": "module",
+  "bin": {
+    "carpwa": "bin/carpwa.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "sim/",
+    "templates/",
+    "vendor/"
+  ],
+  "scripts": {
+    "prepack": "node scripts/vendor-sdk.js",
+    "test": "node --test test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "carplay",
+    "pwa",
+    "jailbreak",
+    "ios",
+    "tweak",
+    "cli",
+    "simulator"
+  ],
+  "license": "MIT"
+}

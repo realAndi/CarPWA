@@ -1,0 +1,9 @@
+Package: com.andi.carpwa
+Name: CarPWA
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Run your own web apps on CarPlay. A tweak, a local server and an SDK for building full custom CarPlay UIs in HTML and JavaScript.
+Maintainer: andi <tafilajandi@gmail.com>
+Author: andi <tafilajandi@gmail.com>
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000), firmware (>= 15.0), uikittools

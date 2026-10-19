@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Hello Car</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main class="hello">
+    <header class="head">
+      <p class="eyebrow" id="mode">CarPWA</p>
+      <h1 class="title">Hello, <span id="car-name">car</span></h1>
+      <p class="sub" id="car-make">Looking for your car…</p>
+    </header>
+
+    <section class="facts" aria-label="Car and screen">
+      <div class="fact">
+        <span class="label">Connection</span>
+        <span class="value" id="transport">–</span>
+      </div>
+      <div class="fact">
+        <span class="label">Screen</span>
+        <span class="value" id="screen-size">–</span>
+        <span class="note" id="screen-scale"></span>
+      </div>
+      <div class="fact">
+        <span class="label">Controls</span>
+        <span class="value" id="input">–</span>
+      </div>
+    </section>
+
+    <section class="badges" aria-label="Live car state">
+      <p class="badge" id="night"><i></i>Night mode <b>–</b></p>
+      <p class="badge" id="appearance"><i></i>Appearance <b>–</b></p>
+      <p class="badge" id="limited"><i></i>Limited UI <b>–</b></p>
+    </section>
+
+    <footer class="actions">
+      <button class="cp-button cp-primary" id="banner">Show banner</button>
+      <button class="cp-button" id="close">Close</button>
+      <p class="status" id="status" role="status"></p>
+    </footer>
+  </main>
+</body>
+</html>

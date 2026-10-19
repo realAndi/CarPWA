@@ -1,0 +1,6 @@
+#!/bin/sh
+# Pushed apps, their storage and the dev token survive a removal; a purge deletes them.
+if [ "$1" = "purge" ]; then
+	rm -rf /var/jb/var/mobile/Library/CarPWA
+fi
+exit 0

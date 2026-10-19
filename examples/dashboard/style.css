@@ -1,0 +1,377 @@
+/* Dashboard. Base colours, the knob focus ring, the safe-area padding on <body>
+   and `.cp-hide-when-limited` come from /_carpwa/carpwa.css.
+   No container queries: CarPWA runs on iOS 15, so sizes follow the viewport. */
+
+:root {
+  --gap: clamp(8px, 1.8vh, 14px);
+  --pad: clamp(12px, 2.8vh, 22px);
+  --radius: clamp(16px, 3.4vh, 26px);
+  --text-2: rgba(235, 235, 245, 0.7);
+  --widget-shadow: none;
+  --scrim: rgba(0, 0, 0, 0.6);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-carpwa-appearance]) {
+    --text-2: rgba(60, 60, 67, 0.82);
+    --widget-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --scrim: rgba(0, 0, 0, 0.3);
+  }
+}
+:root[data-carpwa-appearance="light"] {
+  --text-2: rgba(60, 60, 67, 0.82);
+  --widget-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --scrim: rgba(0, 0, 0, 0.3);
+}
+
+html, body { overflow: hidden; }
+/* .cp-button and friends set `display`, which would otherwise beat the hidden attribute. */
+[hidden] { display: none !important; }
+p { margin: 0; }
+
+/* ---------------------------------------------------------------- grid */
+
+/* Both layouts sit on six tracks. Standard screens (800×480, 1280×720) use
+   them as two columns, with a row of three small widgets at the bottom. */
+.board {
+  height: 100%;
+  display: grid;
+  gap: var(--gap);
+  padding: var(--gap);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: 1.15fr 1fr 1fr;
+  grid-template-areas:
+    "clock   clock   clock   media media media"
+    "weather weather weather nav   nav   nav"
+    "speed   speed   car     car   chan  chan";
+}
+
+/* While driving the car may ask for less on screen: keep what a driver needs. */
+:root[data-carpwa-limited] .board {
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "clock clock clock media media media"
+    "speed speed speed nav   nav   nav";
+}
+
+/* Ultrawide screens (1920×720): three columns. */
+@media (min-aspect-ratio: 2/1) {
+  .board {
+    grid-template-rows: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "clock   clock   media media nav   nav"
+      "clock   clock   media media speed car"
+      "weather weather media media chan  chan";
+  }
+  :root[data-carpwa-limited] .board {
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      "clock clock media media nav   nav"
+      "clock clock media media speed speed";
+  }
+}
+
+.clock   { grid-area: clock; }
+.weather { grid-area: weather; }
+.media   { grid-area: media; }
+.nav     { grid-area: nav; }
+.speed   { grid-area: speed; }
+.car     { grid-area: car; }
+.channel { grid-area: chan; }
+
+/* -------------------------------------------------------------- widget */
+
+.widget {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  min-height: 0;
+  padding: var(--pad);
+  border-radius: var(--radius);
+  background: var(--cp-surface);
+  box-shadow: var(--widget-shadow);
+  overflow: hidden;
+}
+
+.w-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  margin-bottom: auto;
+  color: var(--text-2);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chip {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: #fff;
+}
+.chip svg { width: 18px; height: 18px; fill: currentColor; }
+.c-orange { background: #ff9f0a; }
+.c-blue   { background: #0a84ff; }
+.c-green  { background: #28b14c; }
+.c-indigo { background: #5e5ce6; }
+.c-teal   { background: #1f9fb8; }
+
+.big {
+  font-size: clamp(34px, 10vh, 76px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.w-title,
+.w-line,
+.w-note {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.w-title { font-size: clamp(17px, 4.2vh, 28px); font-weight: 700; letter-spacing: -0.01em; }
+.w-line { color: var(--text-2); font-size: clamp(15px, 3.4vh, 22px); }
+.w-note { color: var(--text-2); font-size: 15px; }
+.w-line:empty, .w-note:empty { display: none; }
+
+/* ------------------------------------------------------------- buttons */
+
+.icon-button,
+.round-button,
+.pill-button {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border: 0;
+  color: var(--cp-text);
+  font: inherit;
+  cursor: pointer;
+  transition: transform 0.12s ease, opacity 0.12s ease;
+}
+.icon-button:active,
+.round-button:active,
+.pill-button:active { transform: scale(0.94); opacity: 0.85; }
+
+.icon-button {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--cp-surface-2);
+}
+.icon-button svg { width: 24px; height: 24px; }
+
+.round-button {
+  --size: clamp(52px, 12vh, 76px);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  background: var(--cp-text);
+  color: var(--cp-bg);
+}
+.round-button svg { width: 46%; height: 46%; fill: currentColor; }
+
+.pill-button {
+  min-height: 52px;
+  min-width: 72px;
+  margin-left: auto;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--cp-surface-2);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* carpwa.css gives focused elements a rounded-rectangle radius; keep shapes. */
+.icon-button.carpwa-focused,
+.round-button.carpwa-focused { border-radius: 50%; }
+.pill-button.carpwa-focused { border-radius: 999px; }
+
+/* --------------------------------------------------------------- clock */
+
+.clock { justify-content: flex-end; }
+
+.clock-time {
+  font-size: clamp(56px, 16vh, 128px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.clock-period {
+  margin-left: 0.2em;
+  color: var(--text-2);
+  font-size: 0.32em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.clock-date {
+  margin-top: 6px;
+  color: var(--text-2);
+  font-size: clamp(17px, 4.2vh, 30px);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.settings-button {
+  position: absolute;
+  top: calc(var(--pad) - 4px);
+  right: calc(var(--pad) - 4px);
+}
+
+@media (min-aspect-ratio: 2/1) {
+  .clock-time { font-size: clamp(64px, 23vh, 190px); }
+}
+
+/* ------------------------------------------------------------- weather */
+
+.weather-body {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1.6vw, 16px);
+  min-width: 0;
+}
+.weather-icon { flex: none; width: clamp(36px, 10vh, 72px); height: clamp(36px, 10vh, 72px); fill: currentColor; }
+.weather-text { min-width: 0; margin-left: 4px; }
+
+/* --------------------------------------------------------------- media */
+
+.media {
+  --art: clamp(64px, 18vh, 160px);
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(12px, 2vw, 22px);
+}
+.media-art {
+  position: relative;
+  flex: none;
+  width: var(--art);
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--cp-surface-2);
+}
+.media-art svg {
+  position: absolute;
+  inset: 28%;
+  width: 44%;
+  height: 44%;
+  fill: var(--text-2);
+}
+.media-art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.media.has-art .media-art img { opacity: 1; }
+.media-text { flex: 1; min-width: 0; }
+.media .w-title {
+  white-space: normal;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 1.15;
+}
+
+.media[data-state="playing"] .when-paused,
+.media:not([data-state="playing"]) .when-playing { display: none; }
+
+@media (min-aspect-ratio: 2/1) {
+  .media {
+    --art: min(100%, 50vh);
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: clamp(12px, 2.6vh, 24px);
+  }
+  .media-art { border-radius: 18px; }
+  .media-text { flex: none; width: 100%; }
+}
+
+/* ----------------------------------------------------------------- nav */
+
+.nav[data-state="navigating"] .w-title { color: var(--cp-success); }
+
+/* --------------------------------------------------------------- speed */
+
+/* The unit sits next to the number ("62 km/h") and is the toggle. */
+.speed-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.speed-row .pill-button { margin-left: 0; }
+:root[data-carpwa-limited] .speed-row .big { font-size: clamp(56px, 20vh, 150px); }
+
+/* -------------------------------------------------------------- sheet */
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: var(--carpwa-safe-top) var(--carpwa-safe-right) var(--carpwa-safe-bottom) var(--carpwa-safe-left);
+  background: var(--scrim);
+  animation: fade-in 0.2s ease;
+}
+
+.sheet-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: min(680px, calc(100% - 32px));
+  max-height: calc(100% - 24px);
+  overflow: hidden;
+  padding: clamp(16px, 3.6vh, 28px);
+  border-radius: 26px;
+  background: var(--cp-surface);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  animation: rise 0.25s ease;
+}
+
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sheet-head h2 { margin: 0; font-size: clamp(22px, 5.4vh, 32px); font-weight: 700; }
+.sheet-head .cp-button { min-width: 96px; }
+
+.sheet-label {
+  margin: 8px 0 0;
+  color: var(--text-2);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.segmented,
+.cities { display: grid; gap: 8px; }
+.segmented { grid-template-columns: 1fr 1fr; }
+.cities { grid-template-columns: repeat(3, 1fr); }
+
+.segmented button,
+.cities button {
+  min-height: 52px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: var(--cp-radius);
+  background: var(--cp-surface-2);
+  color: var(--cp-text);
+  font: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.segmented button[aria-pressed="true"],
+.cities button[aria-pressed="true"] { background: var(--cp-accent); color: #fff; }
+
+@keyframes fade-in { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(16px) scale(0.98); } }

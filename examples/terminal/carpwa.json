@@ -1,0 +1,11 @@
+{
+  "id": "com.carpwa.example.terminal",
+  "name": "Terminal",
+  "short_name": "Terminal",
+  "version": "1.0.0",
+  "start_url": "index.html",
+  "icon": "icon.png",
+  "background_color": "#050806",
+  "permissions": ["apps.launch", "media", "media.control", "navigation", "location"],
+  "min_carpwa": "1.0"
+}

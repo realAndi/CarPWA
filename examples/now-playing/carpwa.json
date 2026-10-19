@@ -1,0 +1,11 @@
+{
+  "id": "com.carpwa.example.nowplaying",
+  "name": "Now Playing",
+  "short_name": "Playing",
+  "version": "1.0.0",
+  "start_url": "index.html",
+  "icon": "icon.png",
+  "background_color": "#000000",
+  "permissions": ["media", "media.control"],
+  "min_carpwa": "1.0"
+}

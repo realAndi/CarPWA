@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>CarPWA</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.andi.carpwa.launcher</string>
+	<key>CFBundleName</key>
+	<string>CarPWA</string>
+	<key>CFBundleDisplayName</key>
+	<string>CarPWA</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon.png</string>
+	</array>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>iPhoneOS</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>MinimumOSVersion</key>
+	<string>15.0</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<!-- Car screen only: no icon on the phone. On the car, the tweak shows one icon per CarPWA app instead. -->
+	<key>SBAppTags</key>
+	<array>
+		<string>hidden</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.andi.carpwa.launcher</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>carpwa-launcher</string>
+			</array>
+		</dict>
+	</array>
+	<!-- The scene setup of /Applications/CarPlaySettings.app: a plain UIKit window on the car screen. -->
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleCarPlay</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>CarPlay</string>
+					<key>UISceneDelegateClassName</key>
+					<string>CPWALauncherSceneDelegate</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<!-- Every page is served by carpwad on 127.0.0.1. -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+	</dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>CarPWA apps that have the location permission show where you are on the car screen.</string>
+</dict>
+</plist>

@@ -1,0 +1,275 @@
+/* Now Playing. Base colours, the knob focus ring and the safe-area padding on
+   <body> come from /_carpwa/carpwa.css. */
+
+:root {
+  --text-2: rgba(235, 235, 245, 0.72);
+  --track: rgba(255, 255, 255, 0.24);
+  --press: rgba(255, 255, 255, 0.14);
+  --scrim-top: rgba(0, 0, 0, 0.42);
+  --scrim-bottom: rgba(0, 0, 0, 0.72);
+  --art-shadow: 0 18px 50px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-carpwa-appearance]) {
+    --text-2: rgba(60, 60, 67, 0.82);
+    --track: rgba(0, 0, 0, 0.14);
+    --press: rgba(0, 0, 0, 0.08);
+    --scrim-top: rgba(242, 242, 247, 0.55);
+    --scrim-bottom: rgba(242, 242, 247, 0.8);
+    --art-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+  }
+}
+:root[data-carpwa-appearance="light"] {
+  --text-2: rgba(60, 60, 67, 0.82);
+  --track: rgba(0, 0, 0, 0.14);
+  --press: rgba(0, 0, 0, 0.08);
+  --scrim-top: rgba(242, 242, 247, 0.55);
+  --scrim-bottom: rgba(242, 242, 247, 0.8);
+  --art-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+}
+
+html, body { overflow: hidden; }
+/* .cp-button and friends set `display`, which would otherwise beat the hidden attribute. */
+[hidden] { display: none !important; }
+
+/* ------------------------------------------- blurred artwork background */
+
+.backdrop {
+  position: fixed;
+  inset: -80px;
+  background: center / cover no-repeat;
+  filter: blur(60px) saturate(1.6);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.has-art .backdrop { opacity: 0.85; }
+
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(var(--scrim-top), var(--scrim-bottom));
+}
+
+.player {
+  position: relative;
+  height: 100%;
+}
+
+.player[data-state="empty"] .now,
+.player:not([data-state="empty"]) .empty { display: none; }
+
+/* -------------------------------------------------------------- player */
+
+.now {
+  height: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 4.5vw, 72px);
+  padding: clamp(16px, 5vh, 48px) clamp(20px, 4.5vw, 64px);
+}
+
+.art {
+  position: relative;
+  width: min(66vh, 42vw);
+  aspect-ratio: 1 / 1;
+  border-radius: clamp(12px, 2.4vh, 22px);
+  overflow: hidden;
+  background: var(--cp-surface-2);
+  box-shadow: var(--art-shadow);
+}
+.art img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.has-art .art img { opacity: 1; }
+.art-placeholder {
+  position: absolute;
+  inset: 28%;
+  width: 44%;
+  height: 44%;
+  fill: var(--text-2);
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.source {
+  margin: 0 0 6px;
+  color: var(--text-2);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.source:empty { display: none; }
+
+.title {
+  margin: 0;
+  font-size: clamp(26px, 7vh, 54px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.artist,
+.album {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.artist {
+  margin: 6px 0 0;
+  font-size: clamp(19px, 4.6vh, 34px);
+  font-weight: 500;
+}
+.album {
+  margin: 2px 0 0;
+  color: var(--text-2);
+  font-size: clamp(16px, 3.6vh, 26px);
+}
+.artist:empty, .album:empty { display: none; }
+
+/* ------------------------------------------------------------ progress */
+
+.progress { margin-top: clamp(12px, 3.4vh, 28px); }
+
+.track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--track);
+  overflow: hidden;
+}
+.fill {
+  height: 100%;
+  background: var(--cp-text);
+  border-radius: inherit;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.times {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  color: var(--text-2);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------- transport */
+
+.transport {
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.6vw, 28px);
+  margin-top: clamp(8px, 3vh, 28px);
+}
+
+.ctl {
+  --size: clamp(52px, 12vh, 84px);
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--cp-text);
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.12s ease, opacity 0.2s ease;
+}
+.ctl:active { transform: scale(0.92); background: var(--press); }
+.ctl:disabled { opacity: 0.3; }
+.ctl svg { width: 58%; height: 58%; fill: currentColor; }
+.ctl svg.flip { transform: scaleX(-1); }
+
+.ctl.play {
+  --size: clamp(64px, 16vh, 108px);
+  background: var(--cp-text);
+  color: var(--cp-bg);
+}
+.ctl.play svg { width: 46%; height: 46%; }
+.ctl.play:active { background: var(--cp-text); opacity: 0.85; }
+
+.player[data-state="playing"] .when-paused,
+.player:not([data-state="playing"]) .when-playing { display: none; }
+
+/* carpwa.css gives focused elements a rounded-rectangle radius; keep these round. */
+.transport .carpwa-focused { border-radius: 50%; }
+:root[data-carpwa-input="knob"] .ctl.carpwa-focused:not(.play),
+:root[data-carpwa-input="touchpad"] .ctl.carpwa-focused:not(.play) { background: var(--press); }
+
+/* --------------------------------------------------------- empty state */
+
+.empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+}
+.empty-icon { width: clamp(56px, 16vh, 96px); height: clamp(56px, 16vh, 96px); fill: var(--text-2); }
+.empty-title {
+  margin: 8px 0 0;
+  font-size: clamp(26px, 6.4vh, 44px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.empty-note {
+  max-width: 32em;
+  margin: 0;
+  color: var(--text-2);
+  font-size: clamp(17px, 3.8vh, 24px);
+}
+.empty-note:empty { display: none; }
+.empty .cp-button {
+  min-height: 60px;
+  min-width: 180px;
+  margin-top: 14px;
+  font-size: 19px;
+}
+
+/* --------------------------------------------------------------- toast */
+
+.toast {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(12px, 4vh, 32px);
+  max-width: calc(100% - 40px);
+  margin: 0;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: var(--cp-surface-2);
+  color: var(--cp-text);
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }

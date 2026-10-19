@@ -1,0 +1,10 @@
+{
+  "name": "carpwa",
+  "version": "1.0.0",
+  "description": "SDK for CarPWA apps: web apps that run on the CarPlay screen of a jailbroken iPhone",
+  "main": "carpwa.js",
+  "types": "carpwa.d.ts",
+  "files": ["carpwa.js", "carpwa.d.ts"],
+  "keywords": ["carplay", "pwa", "jailbreak", "ios", "tweak"],
+  "license": "MIT"
+}

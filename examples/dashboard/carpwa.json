@@ -1,0 +1,12 @@
+{
+  "id": "com.carpwa.example.dashboard",
+  "name": "Dashboard",
+  "short_name": "Dashboard",
+  "version": "1.0.0",
+  "start_url": "index.html",
+  "icon": "icon.png",
+  "background_color": "#000000",
+  "permissions": ["media", "media.control", "navigation", "location", "network"],
+  "network": { "allow": ["api.open-meteo.com"] },
+  "min_carpwa": "1.0"
+}

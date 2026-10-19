@@ -1,0 +1,183 @@
+/* Hello Car. Colours, the knob focus ring and the safe-area padding on <body>
+   come from /_carpwa/carpwa.css; this file only lays the page out. */
+
+:root {
+  --text-2: rgba(235, 235, 245, 0.7);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-carpwa-appearance]) { --text-2: rgba(60, 60, 67, 0.82); }
+}
+:root[data-carpwa-appearance="light"] { --text-2: rgba(60, 60, 67, 0.82); }
+
+html, body { overflow: hidden; }
+/* .cp-button and friends set `display`, which would otherwise beat the hidden attribute. */
+[hidden] { display: none !important; }
+
+.hello {
+  height: 100%;
+  display: grid;
+  grid-template: "head" auto "facts" 1fr "badges" auto "actions" auto / minmax(0, 1fr);
+  gap: clamp(12px, 3vh, 28px);
+  padding: clamp(16px, 4vh, 40px) clamp(20px, 4vw, 48px);
+}
+
+/* Ultrawide screens (1920×720 and friends): two columns instead of a stack. */
+@media (min-aspect-ratio: 2/1) {
+  .hello {
+    grid-template:
+      "head    facts" 1fr
+      "actions badges" auto
+      / minmax(0, 1fr) minmax(0, 1.6fr);
+    column-gap: clamp(24px, 4vw, 64px);
+  }
+  .head { align-self: center; }
+}
+
+/* --------------------------------------------------------------- header */
+
+.head { grid-area: head; min-width: 0; }
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--cp-accent);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(30px, 8vh, 60px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub {
+  margin: 6px 0 0;
+  color: var(--text-2);
+  font-size: clamp(17px, 3.6vh, 24px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---------------------------------------------------------------- facts */
+
+.facts {
+  grid-area: facts;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Fill short screens; on tall ones stop growing and sit in the middle. */
+  grid-auto-rows: minmax(min-content, clamp(140px, 32vh, 240px));
+  align-content: center;
+  gap: 12px;
+  min-height: 0;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: clamp(12px, 3vh, 24px) clamp(14px, 2vw, 24px);
+  border-radius: 20px;
+  background: var(--cp-surface);
+}
+
+.label { color: var(--text-2); font-size: 15px; font-weight: 600; }
+
+.value {
+  font-size: clamp(22px, 5.4vh, 38px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note { color: var(--text-2); font-size: 17px; font-variant-numeric: tabular-nums; }
+.note:empty { display: none; }
+
+/* --------------------------------------------------------------- badges */
+
+.badges {
+  grid-area: badges;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  margin: 0;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--cp-surface);
+  font-size: 17px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.badge b { font-weight: 700; }
+.badge i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.45;
+  transition: opacity 0.3s ease;
+}
+.badge[data-on="true"] i { opacity: 1; }
+#night[data-on="true"] { background: #5e5ce6; color: #fff; }
+#limited[data-on="true"] { background: #ff9f0a; color: #000; }
+
+/* -------------------------------------------------------------- actions */
+
+.actions {
+  grid-area: actions;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.actions .cp-button {
+  min-height: 60px;
+  padding: 0 28px;
+  font-size: 19px;
+}
+
+.status {
+  flex: 1;
+  min-width: 0;
+  margin: 0 0 0 8px;
+  color: var(--text-2);
+  font-size: 17px;
+}
+
+/* -------------------------------------------------------- short screens */
+
+/* 1920×720 at @3x is 640×240 points: tighten everything, keep 44 px targets. */
+@media (max-height: 320px) {
+  .hello { gap: 8px; padding: 10px 16px; column-gap: 20px; }
+  .eyebrow { font-size: 13px; margin-bottom: 2px; }
+  .title { font-size: 28px; }
+  .sub { font-size: 15px; margin-top: 2px; }
+  .facts { grid-auto-rows: minmax(0, 1fr); gap: 8px; }
+  .fact { padding: 8px 12px; border-radius: 14px; gap: 2px; }
+  .label { font-size: 13px; }
+  .value { font-size: 20px; }
+  .note { font-size: 14px; }
+  .badges { gap: 6px; }
+  .badge { min-height: 36px; padding: 0 12px; gap: 8px; font-size: 14px; }
+  .actions { gap: 8px; }
+  .actions .cp-button { min-height: 44px; padding: 0 16px; font-size: 16px; }
+  .status { font-size: 14px; }
+}

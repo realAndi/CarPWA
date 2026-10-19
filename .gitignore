@@ -1,0 +1,11 @@
+# Build output
+.theos/
+packages/
+Daemon/.build/
+cli/vendor/
+*.deb
+
+# Local
+.DS_Store
+node_modules/
+spike/

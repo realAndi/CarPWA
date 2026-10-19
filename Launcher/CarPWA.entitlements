@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- CarKit: a system CarPlay app (like CarPlay Settings), launched into its
+	     own UIWindowSceneSessionRoleCarPlay scene instead of the template UI. -->
+	<key>CARCapableApp</key>
+	<true/>
+	<!-- CARSessionStatus, the navigation owners service. -->
+	<key>com.apple.private.carkit</key>
+	<true/>
+	<key>platform-application</key>
+	<true/>
+	<!-- In the container sandbox, like Safari and WebSheet: the platform policy
+	     denies WebKit's XPC services (WebContent, Networking) to processes
+	     outside it, with or without a data container. -->
+	<key>com.apple.private.security.container-required</key>
+	<true/>
+	<!-- apps.list: every installed app, to find the CarPlay ones. -->
+	<key>com.apple.private.coreservices.canmaplsdatabase</key>
+	<true/>
+	<!-- media.* transport controls. -->
+	<key>com.apple.mediaremote.send-commands</key>
+	<true/>
+	<key>com.apple.security.exception.mach-lookup.global-name</key>
+	<array>
+		<string>com.apple.carkit.service</string>
+		<string>com.apple.carkit.app.service</string>
+		<string>com.apple.carkit.navowners.service</string>
+		<string>com.apple.mediaremoted.xpc</string>
+	</array>
+</dict>
+</plist>

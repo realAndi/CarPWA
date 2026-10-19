@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.andi.carpwa.daemon</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/var/jb/usr/libexec/carpwad</string>
+	</array>
+	<key>UserName</key>
+	<string>mobile</string>
+	<key>GroupName</key>
+	<string>mobile</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<true/>
+	<key>ThrottleInterval</key>
+	<integer>5</integer>
+	<!-- It serves the CarPlay screen: keep it out of background throttling. -->
+	<key>ProcessType</key>
+	<string>Interactive</string>
+	<key>StandardOutPath</key>
+	<string>/dev/null</string>
+	<key>StandardErrorPath</key>
+	<string>/var/jb/var/mobile/Library/CarPWA/run/carpwad.log</string>
+</dict>
+</plist>

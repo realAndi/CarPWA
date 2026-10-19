@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>{{NAME}}</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="player" id="player" data-state="empty">
+    <div class="art-wrap">
+      <img class="art" id="art" alt="" hidden>
+      <div class="art-placeholder" id="art-placeholder" aria-hidden="true">♪</div>
+    </div>
+
+    <section class="details">
+      <p class="source" id="source">{{NAME}}</p>
+      <h1 class="title" id="title">Nothing playing</h1>
+      <p class="artist" id="artist">Start something on your phone, or press play.</p>
+
+      <div class="progress" aria-hidden="true">
+        <div class="bar"><div class="fill" id="fill"></div></div>
+        <div class="times cp-mono"><span id="elapsed">0:00</span><span id="remaining">–0:00</span></div>
+      </div>
+
+      <div class="controls">
+        <button class="cp-button cp-round ctl" id="prev" aria-label="Previous">
+          <svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+        </button>
+        <button class="cp-button cp-round ctl ctl-main" id="play" aria-label="Play">
+          <svg viewBox="0 0 24 24" class="icon-play"><path d="M7 4.5v15L20 12z"/></svg>
+          <svg viewBox="0 0 24 24" class="icon-pause"><path d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>
+        </button>
+        <button class="cp-button cp-round ctl" id="next" aria-label="Next">
+          <svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <p class="notice" id="notice" hidden></p>
+  </main>
+</body>
+</html>

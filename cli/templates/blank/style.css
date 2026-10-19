@@ -1,0 +1,86 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  padding: 24px 28px;
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.hero-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.mode {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--cp-surface-2);
+  color: var(--cp-text-2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 0;
+}
+
+.tile-icon {
+  font-size: 26px;
+  line-height: 1;
+  color: var(--cp-accent);
+}
+
+.tile-label {
+  margin: 8px 0 0;
+  color: var(--cp-text-2);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tile-value {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.tile-note {
+  margin: 0;
+  color: var(--cp-text-2);
+  font-size: 15px;
+}
+
+code {
+  font: 0.9em ui-monospace, "SF Mono", Menlo, monospace;
+  color: var(--cp-text);
+}
+
+.browser-hint {
+  margin: 0;
+  color: var(--cp-text-2);
+  font-size: 15px;
+}

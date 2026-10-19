@@ -1,0 +1,11 @@
+{
+  "id": "com.carpwa.example.hello",
+  "name": "Hello Car",
+  "short_name": "Hello Car",
+  "version": "1.0.0",
+  "start_url": "index.html",
+  "icon": "icon.png",
+  "background_color": "#000000",
+  "permissions": [],
+  "min_carpwa": "1.0"
+}

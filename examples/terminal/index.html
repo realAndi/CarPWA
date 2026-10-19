@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <title>Terminal</title>
+  <link rel="stylesheet" href="/_carpwa/carpwa.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="/_carpwa/sdk.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <main class="term">
+    <header class="bar">
+      <p class="prompt"><span class="who" id="who">carpwa@car</span><span class="dim">:~$</span> <span class="cmd" id="cmd">ls apps/</span><i class="cursor" aria-hidden="true"></i></p>
+      <p class="flags" id="flags"></p>
+      <time class="clock" id="clock">--:--</time>
+    </header>
+
+    <section class="pane apps" aria-label="Apps">
+      <h2 class="legend">apps <span id="page"></span></h2>
+      <ul class="list" id="apps"></ul>
+    </section>
+
+    <section class="pane media" aria-label="Now playing">
+      <h2 class="legend">now playing</h2>
+      <p class="np-title" id="np-title">nothing playing</p>
+      <p class="np-sub dim" id="np-sub"></p>
+      <p class="np-bar"><span id="np-bar"></span> <span class="dim" id="np-time"></span></p>
+      <div class="keys">
+        <button class="key" id="prev" aria-label="Previous track">|&lt;</button>
+        <button class="key" id="toggle" aria-label="Play or pause">&gt;</button>
+        <button class="key" id="next" aria-label="Next track">&gt;|</button>
+      </div>
+    </section>
+
+    <section class="pane sys" aria-label="Status">
+      <h2 class="legend">sys</h2>
+      <dl class="kv">
+        <dt>nav</dt><dd id="nav">--</dd>
+        <dt>spd</dt><dd id="speed">--</dd>
+        <dt>hdg</dt><dd id="heading">--</dd>
+        <dt>car</dt><dd id="car">--</dd>
+        <dt>scr</dt><dd id="screen">--</dd>
+      </dl>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,238 @@
+/* Terminal. Phosphor green on black by day, amber at night, dark green on
+   paper with a light appearance. The safe-area padding on <body> and the
+   focus handling come from /_carpwa/carpwa.css; this file only lays out
+   and paints the page. */
+
+:root {
+  --bg: #050806;
+  --fg: #8affb0;
+  --dim: #4f8a62;
+  --line: #1f3d2a;
+  --hi: #ffb347;
+  --err: #ff6b6b;
+  --glow: rgba(138, 255, 176, 0.28);
+  --row: 52px;
+  --mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+/* Night: amber, which is easier on the eyes in the dark. */
+:root[data-carpwa-night] {
+  --fg: #ffb347;
+  --dim: #9a7440;
+  --line: #3d2f1a;
+  --hi: #8affb0;
+  --glow: rgba(255, 179, 71, 0.22);
+}
+:root[data-carpwa-appearance="light"]:not([data-carpwa-night]) {
+  --bg: #eef3ea;
+  --fg: #17462a;
+  --dim: #4f7a5c;
+  --line: #b5cab5;
+  --hi: #9a5600;
+  --err: #b3261e;
+  --glow: transparent;
+}
+
+html, body {
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font: 15px/1.3 var(--mono);
+  text-shadow: 0 0 6px var(--glow);
+}
+/* .cp-button and friends set `display`, which would otherwise beat the hidden attribute. */
+[hidden] { display: none !important; }
+p, h2, dl { margin: 0; }
+.dim { color: var(--dim); }
+
+/* Faint scan lines, drawn once. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 2px, rgba(0, 0, 0, 0.16) 2px 3px);
+}
+:root[data-carpwa-appearance="light"]:not([data-carpwa-night]) body::after { display: none; }
+
+.term {
+  height: 100%;
+  display: grid;
+  grid-template:
+    "bar  bar"   auto
+    "apps media" minmax(0, 1fr)
+    "apps sys"   minmax(0, 1fr)
+    / minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 18px 14px;
+  padding: 12px 16px 14px;
+}
+
+/* Ultrawide screens (1920×720 and friends): three columns side by side. */
+@media (min-aspect-ratio: 2/1) {
+  .term {
+    grid-template:
+      "bar  bar   bar" auto
+      "apps media sys" minmax(0, 1fr)
+      / minmax(0, 1.2fr) minmax(0, 1.1fr) minmax(0, 0.8fr);
+  }
+}
+
+/* ------------------------------------------------------------------ bar */
+
+.bar {
+  grid-area: bar;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  min-width: 0;
+}
+.prompt {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.who { color: var(--hi); }
+.cmd.err { color: var(--err); }
+.cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.18em;
+  background: var(--fg);
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+.flags { color: var(--dim); white-space: nowrap; }
+.clock { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* ---------------------------------------------------------------- panes */
+
+.pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  padding: 14px 10px 8px;
+  border: 1px solid var(--line);
+}
+/* The title sits in the top border, like a box drawn with ┌─ apps ─┐. */
+.legend {
+  position: absolute;
+  top: -0.7em;
+  left: 10px;
+  padding: 0 6px;
+  background: var(--bg);
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.apps { grid-area: apps; }
+.media { grid-area: media; }
+.sys { grid-area: sys; }
+
+/* ------------------------------------------------------------------ apps */
+
+.list {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+}
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: var(--row);
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  text-align: left;
+  text-shadow: inherit;
+  cursor: pointer;
+}
+.entry::before { content: " "; color: var(--hi); }
+.entry .name { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tag { flex: none; color: var(--dim); font-size: 0.82em; }
+.tag.pwa { color: var(--hi); }
+.entry.more { color: var(--dim); }
+.empty { padding: 0 8px; color: var(--dim); }
+
+/* ----------------------------------------------------------------- media */
+
+.np-title {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.np-sub, .np-bar { margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.np-bar { margin-top: 6px; font-variant-numeric: tabular-nums; }
+.keys { display: flex; gap: 8px; margin-top: auto; padding-top: 8px; }
+.key {
+  flex: 1;
+  min-height: var(--row);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-weight: 700;
+  text-shadow: inherit;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------- sys */
+
+.kv {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-content: start;
+  gap: 3px 12px;
+}
+.kv dt { color: var(--dim); }
+.kv dd { margin: 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.kv dd.hot { color: var(--hi); }
+
+/* -------------------------------------------------------- selection */
+
+/* Inverse video instead of the SDK's focus ring: while the knob drives the
+   page (data-knob, set by app.js), and as touch feedback. */
+.term .carpwa-focused {
+  outline: none !important;
+  border-radius: 0 !important;
+}
+:root[data-knob] .term .carpwa-focused,
+.term .entry:active,
+.term .key:active {
+  background: var(--fg);
+  color: var(--bg);
+  text-shadow: none;
+}
+:root[data-knob] .term .carpwa-focused::before { content: ">"; color: inherit; }
+:root[data-knob] .term .carpwa-focused .tag,
+.term .entry:active .tag { color: inherit; }
+
+/* -------------------------------------------------------- short screens */
+
+/* 1920×720 at @3x is 640×240 points: smaller type and rows, so a page
+   of apps and the whole status pane fit. */
+@media (max-height: 320px) {
+  :root { --row: 40px; }
+  html, body { font-size: 13px; }
+  .term { gap: 12px 10px; padding: 8px 12px 8px; }
+  .pane { padding: 10px 8px 4px; }
+  .legend { font-size: 11px; }
+  .entry { gap: 8px; padding: 0 6px; }
+  .keys { gap: 6px; padding-top: 4px; }
+  .kv { gap: 1px 10px; }
+}

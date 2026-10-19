@@ -1,0 +1,6 @@
+#!/bin/sh
+# Runs as root before removal and before an upgrade replaces the files.
+PLIST=/var/jb/Library/LaunchDaemons/com.andi.carpwa.daemon.plist
+launchctl unload "$PLIST" >/dev/null 2>&1 || launchctl bootout system "$PLIST" >/dev/null 2>&1 || true
+uicache -u /var/jb/Applications/CarPWA.app >/dev/null 2>&1 || true
+exit 0
